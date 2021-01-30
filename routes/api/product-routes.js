@@ -39,10 +39,49 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  Product.findOne({
+    where: {
+    id: req.params.id
+  },
+  include: [
+    {
+      model: Category,
+   
+   attributes: [
+    'id',
+    'category_name'
+   ]
+    },
+    {
+      model: Tag,
+    
+      attributes: [ 
+        'id',
+        'tag_name']
+     }
+  ]
+})
+.then(dbCategoryData => {
+  if (!dbCategoryData) {
+    res.status(404).json({ message: 'No Product found with this id' });
+    return;
+  }
+  res.json(dbCategoryData);
+})
+.catch(err => {
+  console.log(err);
+  res.status(500).json(err);
+  });
 });
 
 // create new product
 router.post('/', (req, res) => {
+  Product.create({
+    product_name:req.body.product_name,
+    price: req.body.post_url,
+    stock: req.body.stock,
+    tagIds: req.body.tagIds
+  })
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -51,6 +90,13 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
+ .then(ProductData => res.json(ProductData))
+ .catch(err => {
+   console.log(err);
+   res.status(500).json(err);
+ });
+
+
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
