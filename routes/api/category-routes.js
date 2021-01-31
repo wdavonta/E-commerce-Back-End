@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   // be sure to include its associated Products
   console.log('======================');
   Category.findAll({
-    include: [
+    include:
       {
         model: Product,
      
@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
        'price', 
        'category_id']
       }
-    ]
   })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err => {
@@ -35,7 +34,7 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    include: [
+    include:
       {
         model: Product,
      
@@ -46,7 +45,6 @@ router.get('/:id', (req, res) => {
        'price', 
        'category_id']
       }
-    ]
   })
   .then(dbCategoryData => {
     if (!dbCategoryData) {
@@ -86,7 +84,7 @@ router.put('/:id', (req, res) => {
   )
     .then(dbCategoryData => {
       if (!dbCategoryData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        res.status(404).json({ message: 'No category found with this id' });
         return;
       }
       res.json(dbCategoryData);

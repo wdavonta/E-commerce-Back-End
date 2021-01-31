@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { Post } = require('../../../just-tech-news/models');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
@@ -91,11 +90,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
- .then(dbProductData => res.json(dbProductData))
- .catch(err => {
-   console.log(err);
-   res.status(500).json(err);
- });
+
 
 
   Product.create(req.body)
@@ -164,7 +159,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
-  Post.destroy({
+  Product.destroy({
     where: {
       id: req.params.id
     }
