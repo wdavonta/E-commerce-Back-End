@@ -61,12 +61,12 @@ router.get('/:id', (req, res) => {
      }
   ]
 })
-.then(dbCategoryData => {
-  if (!dbCategoryData) {
+.then(dbProductData => {
+  if (!dbProductData) {
     res.status(404).json({ message: 'No Product found with this id' });
     return;
   }
-  res.json(dbCategoryData);
+  res.json(dbProductData);
 })
 .catch(err => {
   console.log(err);
@@ -78,8 +78,9 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   Product.create({
     product_name:req.body.product_name,
-    price: req.body.post_url,
+    price: req.body.price,
     stock: req.body.stock,
+    category_id: req.body.category_id,
     tagIds: req.body.tagIds
   })
   /* req.body should look like this...
@@ -90,7 +91,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
- .then(ProductData => res.json(ProductData))
+ .then(dbProductData => res.json(dbProductData))
  .catch(err => {
    console.log(err);
    res.status(500).json(err);
