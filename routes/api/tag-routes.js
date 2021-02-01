@@ -48,7 +48,7 @@ router.get('/:id', (req, res) => {
   })
   .then(dbTagData => {
     if (!dbTagData) {
-      res.status(404).json({ message: 'No Product found with this id' });
+      res.status(404).json({ message: 'No tag found with this id' });
       return;
     }
     res.json(dbTagData);
@@ -73,7 +73,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  Tag.update(
+  Tag.update(req.body,
   
     {
       where: {

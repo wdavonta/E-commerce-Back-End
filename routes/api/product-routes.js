@@ -80,7 +80,7 @@ router.post('/', (req, res) => {
     price: req.body.price,
     stock: req.body.stock,
     category_id: req.body.category_id,
-    tagIds: req.body.tagIds
+    tagIds: req.body.tag_id
   })
   /* req.body should look like this...
     {
